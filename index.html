@@ -4,13 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
-    <script src="./assets/script/script.js"></script>
+    <script type="module" src="./assets/script/script.js" defer></script>
     <link rel="stylesheet" href="./assets/styles/main.css">
 </head>
 <body>
     <section class="container">
         <div class="search">
-            <input type="text" name="" class="search-input" placeholder="enter city name">
+            <input list="city" name="" class="search-input" placeholder="enter city name">
+            <datalist id="city">
+                <option value="London"></option>
+                <option value="Brussels"></option>
+                <option value="Mexico"></option>
+                <option value="Toronto"></option>
+                <option value="Tokyo"></option>
+                <option value="Los Angeles"></option>
+                <option value="Johannesburg"></option>
+                <option value="Abu Dhabi"></option>
+                <option value="Berlin"></option>
+                <option value="Oslo"></option>
+            </datalist>
             <button type="submit" class="seach-btn"><img src="./assets/img/icon/search.svg" alt="search icon"></button>
         <!-- </div>
         <div class="weather">

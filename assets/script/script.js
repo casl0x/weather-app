@@ -1,3 +1,5 @@
+import  {iconMap}  from "./icon.js";
+
 document.addEventListener('DOMContentLoaded', function () {
    const card = document.querySelector('.container');
     
@@ -25,16 +27,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function getWeather (){
         try {
-            const localisation = await fetch(`https://api.api-ninjas.com/v1/weather?city= ${writeCity.value}`, {
-                method: 'GET',
-                headers: {
-                    'X-Api-Key': 'IFV69ObX+6vTbrpfBr6Qmw==HZ6dWj1X4MKCe0cR',
-                    'Content-Type': 'application/json'
-                }
-            });
+            const localisation = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${writeCity.value}&count=1&language=en&format=json`)
+            const dataL = await localisation.json();
 
-            const data = await localisation.json();
-            weatherTemp.innerHTML = `${data.temp} °C` ;
+            const weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${dataL.latitude}&longitude=${dataL.longitude}1&hourly=temperature_2m,apparent_temperature,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timeformat=unixtime&timezone=${dataL.timezone}`);
+
+            const dataW = await weather.json();
+            weatherIcon.innerHTML = 
+            weatherTemp.innerHTML = `${dataW.temperature_2m} °C  ▬  fells like : ${dataW.apparent_temperature}` ;
+            weatherCity.innerHTML = dataL.city
 
         } catch (err) {
             console.error("error", err.message)
