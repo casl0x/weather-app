@@ -25,25 +25,39 @@ document.addEventListener('DOMContentLoaded', function () {
     const writeCity = document.querySelector('.search-input');
     const validateSeach = document.querySelector('.seach-btn');
 
-    async function getWeather (){
+    validateSeach.addEventListener('click', () => {
+        const city = writeCity.value;
+        if(city){
+            getWeather(city)
+        }
+    });
+
+    async function getWeather(city) {
         try {
-            const localisation = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${writeCity.value}&count=1&language=en&format=json`)
+            const localisation = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=en&format=json`)
             const dataL = await localisation.json();
 
-            const weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${dataL.latitude}&longitude=${dataL.longitude}1&hourly=temperature_2m,apparent_temperature,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timeformat=unixtime&timezone=${dataL.timezone}`);
+            console.log(dataL)
 
-            const dataW = await weather.json();
-            weatherIcon.innerHTML = 
-            weatherTemp.innerHTML = `${dataW.temperature_2m} °C  ▬  fells like : ${dataW.apparent_temperature}` ;
-            weatherCity.innerHTML = dataL.city
+            if (dataL.length > 0) {
+                const coordResult = dataL[0];
+                const {latitude, longitude, timezone} = coordResult;
+
+                const weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,apparent_temperature,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timeformat=unixtime&timezone=${timezone}`);
+
+                const dataW = await weather.json();
+                weatherTemp.innerHTML = `${dataW.hourly.temperature_2m} °C  ▬  fells like : ${dataW.hourly.apparent_temperature}` ;
+                weatherCity.innerHTML = resultat.name; 
+            } else {
+                alert("City not found!")
+            }
+            
 
         } catch (err) {
             console.error("error", err.message)
             alert("Fail !");
         }
     }
-
-    validateSeach.addEventListener('click', getWeather);
 
     getWeather()
 });
