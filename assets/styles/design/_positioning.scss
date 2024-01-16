@@ -1,7 +1,13 @@
+body {
+    // display: flex;    
+    // align-items: center;
+    // justify-content: center;
+    background: $bg-color;
+    color: $txt-color;
+}
 .container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
     align-items: center;
-    justify-content: center;
+    gap: 10px;
 }

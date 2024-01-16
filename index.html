@@ -9,27 +9,13 @@
 </head>
 <body>
     <section class="container">
-        <h1>Weather App</h1>
         <div class="search">
-            <input list="city" class="search-input" placeholder="enter city name" id="input-box">
+            <input list="city" class="search-input" placeholder="search for the weather in your city ..." id="input-box">
             <datalist id="city">
             </datalist>
-            <button type="submit" class="seach-btn"><img src="./assets/img/icon/search.svg" alt="search icon"></button>
+            <input class="search-btn" value="Search" type="submit">
         </div>
-        <div class="result">
-            <!-- <div class="weather">
-                <img src="icon" alt="" class="weather-icon">
-                <p class="weather-temp"> </p>
-                <p class="weather-city"> </p>
-            </div>
-            <div class="weekly-weather">
-                <div class="day-card">
-                    <img src="icon" class="weather-icon" />
-                    <p class="day-card-day">Monday</p>
-                    <p>32&deg;</p>
-                </div>
-            </div>  -->
-        </div>
+        <div class="result"></div>
     </section>
 </body>
 </html>

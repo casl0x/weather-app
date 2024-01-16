@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Heebo&family=Poppins&display=swap");
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -48,14 +49,76 @@ table {
   border-spacing: 0;
 }
 
+body {
+  background: rgb(30, 30, 30);
+  color: rgb(255, 255, 255);
+}
+
 .container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
 }
 
-.weather-icon {
-  width: 10vw;
+.search {
+  margin: 5vh auto;
+  display: flex;
+  justify-content: center;
+}
+.search-input {
+  min-height: 25px;
+  width: 50vw;
+  background: transparent;
+  border: 2px solid rgba(211, 255, 206, 0.5);
+  border-radius: 24px 0 0 24px;
+  font-size: 15px;
+  padding: 0 1rem;
+  color: rgb(255, 255, 255);
+}
+.search-input:hover {
+  border: 2px solid #d3ffce;
+}
+.search-input:focus-visible {
+  outline: none;
+}
+.search-btn {
+  min-height: 25px;
+  background: rgba(211, 255, 206, 0.5);
+  border: none;
+  border-radius: 0 24px 24px 0;
+  font-size: 15px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+}
+.search-btn:hover {
+  background: #d3ffce;
+}
+
+.result {
+  width: 100vw;
+}
+
+.weather {
+  margin: 3%;
+  display: grid;
+  grid-template-areas: "a b b" "c c c";
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1.5rem;
+}
+.weather-info {
+  grid-area: a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border: 1px solid red;
+}
+.weather-today {
+  grid-area: b;
+  display: flex;
+  flex-direction: row;
+  border: 1px solid green;
 }/*# sourceMappingURL=main.css.map */

@@ -38,17 +38,34 @@ document.addEventListener('DOMContentLoaded', function () {
         const result = document.querySelector('.result');
 
         const imgIcon = document.createElement('img');
-        imgIcon.classList.add('weather-icon');
+        imgIcon.classList.add('icon');
 
         icons(data, imgIcon)
         result.innerHTML = 
         `
         <div class="weather">
-            <p class="weather-city">${data.name}</p>
-            <p class="weather-date">${today}</p>
-            <img src="${imgIcon.src}" class="weather-icon">
-            <p class="weather-temp">${Math.round(data.main.temp)}&deg;C</p>
-            <p class="weather-feels>Feels like : ${Math.round(data.main.feels_like)}&deg;C</p>
+            <div class="weather-info">
+                <p class="weather-info-city">${data.name}</p>
+                <p class="weather-info-date">${today}</p>
+            </div>
+            <div class="weather-today">
+                <div>
+                    <p class="temp">${Math.round(data.main.temp)}&deg;C</p>
+                    <p class="feels">Feels like : ${Math.round(data.main.feels_like)}&deg;C</p>
+                    <p>${data.sys.sunrise}</p>
+                    <p>${data.sys.sunset}</p>
+                </div>
+                <div>
+                    <img src="${imgIcon.src}" class="icon">
+                    <p>${data.weather[0].main}</p>
+                </div>
+                <div>
+                    <p>${data.main.humidity}</p>
+                    <p>${data.wind.speed}</p>
+                    <p>${data.main.pressure}</p>
+                    <p>${data.visibility}</p>
+                </div>
+            </div>
         </div>
         `
         card.append(result);
@@ -65,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function icons (data, imgIcon){
         if (data.weather[0].main === 'Rain') {
           imgIcon.src = 'assets/img/icon/rain.png';
-        } else if (data.weather[0].main === 'Clouds') {
+        } else if (data.weather[0].main === 'Clouds' || data.weather[0].main === 'Mist') {
           imgIcon.src = 'assets/img/icon/cloud.png';
         } else if (data.weather[0].main === 'Clear') {
           imgIcon.src = 'assets/img/icon/cloud-sun.png';
@@ -73,8 +90,6 @@ document.addEventListener('DOMContentLoaded', function () {
           imgIcon.src = 'assets/img/icon/snowflake.png';
         } else if (data.weather[0].main === 'Sunny') {
           imgIcon.src = 'assets/img/icon/sun.png';
-        } else if (data.weather[0].main === 'Mist') {
-          imgIcon.src = 'assets/img/icon/smog.png';
         } else if (data.weather[0].main === 'Thunderstorm' || data.weather[0].main === 'Drizzle') {
           imgIcon.src = 'assets/img/icon/thunderstorm.png';
         } else {
