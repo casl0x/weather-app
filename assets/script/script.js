@@ -1,63 +1,84 @@
-import  {iconMap}  from "./icon.js";
+document.addEventListener('DOMContentLoaded', function () { 
+    // clé api
+    const apiKey = '3f23b6f16c2b419d6eaa598f5f59f93a';  
 
-document.addEventListener('DOMContentLoaded', function () {
-   const card = document.querySelector('.container');
-    
-   // météo du jour 
-    const weatherDiv = document.createElement('div');
-    weatherDiv.classList.add('weather')
-    card.appendChild(weatherDiv);
-    const weatherIcon = document.createElement('img');
-    weatherIcon.classList.add('weather-icon');
-    const weatherTemp = document.createElement('p');
-    weatherTemp.classList.add('weather-temp');
-    weatherTemp.innerHTML = '-';
-    const weatherCity = document.createElement('p');
-    weatherCity.classList.add('weather-city');
-    weatherCity.innerHTML = '-';
-
-    weatherDiv.appendChild(weatherIcon);
-    weatherDiv.appendChild(weatherTemp);
-    weatherDiv.appendChild(weatherCity); 
-
-    
-
+    // validation dans la zone de texte avec enter
     const writeCity = document.querySelector('.search-input');
-    const validateSeach = document.querySelector('.seach-btn');
-
-    validateSeach.addEventListener('click', () => {
-        const city = writeCity.value;
-        if(city){
-            getWeather(city)
+    writeCity.addEventListener('keypress', (e) => {
+        if (e.keyCode === 13) {
+            getWeather(writeCity.value);
         }
-    });
+    })
 
+    // validation de la zone de texte avec le bouton submit
+    const validateSeach = document.querySelector('.seach-btn');
+    validateSeach.addEventListener('click', (e) => {
+        getWeather(writeCity.value)
+    })
+
+    // liaison de l'api météo
     async function getWeather(city) {
         try {
-            const localisation = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=en&format=json`)
-            const dataL = await localisation.json();
-
-            console.log(dataL)
-
-            if (dataL.length > 0) {
-                const coordResult = dataL[0];
-                const {latitude, longitude, timezone} = coordResult;
-
-                const weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,apparent_temperature,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timeformat=unixtime&timezone=${timezone}`);
-
-                const dataW = await weather.json();
-                weatherTemp.innerHTML = `${dataW.hourly.temperature_2m} °C  ▬  fells like : ${dataW.hourly.apparent_temperature}` ;
-                weatherCity.innerHTML = resultat.name; 
-            } else {
-                alert("City not found!")
-            }
+            const weather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
+            const data = await weather.json();
+            console.log(data);
+            showWeather(data);
             
-
         } catch (err) {
-            console.error("error", err.message)
+            console.error("error", err.message);
             alert("Fail !");
         }
     }
 
-    getWeather()
+    // création de la carte d'info météo
+    function showWeather (data){
+        const today = new Date()
+
+        const card = document.querySelector('.container');
+        const result = document.querySelector('.result');
+
+        const imgIcon = document.createElement('img');
+        imgIcon.classList.add('weather-icon');
+
+        icons(data, imgIcon)
+        result.innerHTML = 
+        `
+        <div class="weather">
+            <p class="weather-city">${data.name}</p>
+            <p class="weather-date">${today}</p>
+            <img src="${imgIcon.src}" class="weather-icon">
+            <p class="weather-temp">${Math.round(data.main.temp)}&deg;C</p>
+            <p class="weather-feels>Feels like : ${Math.round(data.main.feels_like)}&deg;C</p>
+        </div>
+        `
+        card.append(result);
+        reset();
+    }
+
+    // reset de l'input text
+    function reset() {
+        let input = document.getElementById('input-box');
+        input.value = "";
+    }
+
+    // changement d'icone selon les conditions météos
+    function icons (data, imgIcon){
+        if (data.weather[0].main === 'Rain') {
+          imgIcon.src = 'assets/img/icon/rain.png';
+        } else if (data.weather[0].main === 'Clouds') {
+          imgIcon.src = 'assets/img/icon/cloud.png';
+        } else if (data.weather[0].main === 'Clear') {
+          imgIcon.src = 'assets/img/icon/cloud-sun.png';
+        } else if (data.weather[0].main === 'Snow') {
+          imgIcon.src = 'assets/img/icon/snowflake.png';
+        } else if (data.weather[0].main === 'Sunny') {
+          imgIcon.src = 'assets/img/icon/sun.png';
+        } else if (data.weather[0].main === 'Mist') {
+          imgIcon.src = 'assets/img/icon/smog.png';
+        } else if (data.weather[0].main === 'Thunderstorm' || data.weather[0].main === 'Drizzle') {
+          imgIcon.src = 'assets/img/icon/thunderstorm.png';
+        } else {
+          imgIcon.src = 'assets/img/icon/cloud-sun.png';
+        }
+      }
 });
