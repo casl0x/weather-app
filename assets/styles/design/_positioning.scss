@@ -1,10 +1,12 @@
 body {
-    // display: flex;    
-    // align-items: center;
-    // justify-content: center;
     background: $bg-color;
     color: $txt-color;
 }
+
+p{
+    font-family: $txt-font;
+}
+
 .container {
     display: flex;
     flex-direction: column;

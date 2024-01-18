@@ -54,6 +54,10 @@ body {
   color: rgb(255, 255, 255);
 }
 
+p {
+  font-family: "Poppins", sans-serif;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -95,30 +99,36 @@ body {
   background: #d3ffce;
 }
 
-.result {
-  width: 100vw;
-}
-
 .weather {
-  margin: 3%;
-  display: grid;
-  grid-template-areas: "a b b" "c c c";
-  grid-template-columns: 1fr 2fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
 }
 .weather-info {
-  grid-area: a;
+  display: flex;
+  flex-direction: row;
+  height: 20vh;
+}
+.weather-info-city {
+  font-family: "Heebo", sans-serif;
+  font-size: 2rem;
+}
+.weather-info-picture {
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.weather-week {
+  display: flex;
+  flex-direction: row;
+  gap: 2vw;
+}
+.weather-daily {
+  background: rgb(50, 50, 50);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  border: 1px solid red;
-}
-.weather-today {
-  grid-area: b;
-  display: flex;
-  flex-direction: row;
-  border: 1px solid green;
+  gap: 0.5rem;
+  padding: 1rem;
 }/*# sourceMappingURL=main.css.map */

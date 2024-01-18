@@ -1,28 +1,22 @@
-document.addEventListener('DOMContentLoaded', function () { 
-    // clé api
-    const apiKey = '3f23b6f16c2b419d6eaa598f5f59f93a';  
-
-    // validation dans la zone de texte avec enter
-    const writeCity = document.querySelector('.search-input');
-    writeCity.addEventListener('keypress', (e) => {
-        if (e.keyCode === 13) {
-            getWeather(writeCity.value);
-        }
-    })
-
-    // validation de la zone de texte avec le bouton submit
-    const validateSeach = document.querySelector('.seach-btn');
-    validateSeach.addEventListener('click', (e) => {
-        getWeather(writeCity.value)
-    })
+import showWeather from "./show-weather.js";
+import dataList from "./datalist.js";
+   
+   // clé api
+    const apiKey = '3f23b6f16c2b419d6eaa598f5f59f93a';
+    const clientId = '3HuUBlMXdX4em8AJolNusLsGl66WnZaD2f4AHxH1QMw' 
 
     // liaison de l'api météo
     async function getWeather(city) {
         try {
-            const weather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
-            const data = await weather.json();
+            const forecast = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`);
+            const data = await forecast.json();
             console.log(data);
-            showWeather(data);
+
+            const picture = await fetch(`https://api.unsplash.com/search/photos?query=${city}&client_id=${clientId}&per_page=1`)
+            const dataP = await picture.json();
+            console.log(dataP)
+
+            showWeather(data, dataP);
             
         } catch (err) {
             console.error("error", err.message);
@@ -30,70 +24,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // création de la carte d'info météo
-    function showWeather (data){
-        const today = new Date()
-
-        const card = document.querySelector('.container');
-        const result = document.querySelector('.result');
-
-        const imgIcon = document.createElement('img');
-        imgIcon.classList.add('icon');
-
-        icons(data, imgIcon)
-        result.innerHTML = 
-        `
-        <div class="weather">
-            <div class="weather-info">
-                <p class="weather-info-city">${data.name}</p>
-                <p class="weather-info-date">${today}</p>
-            </div>
-            <div class="weather-today">
-                <div>
-                    <p class="temp">${Math.round(data.main.temp)}&deg;C</p>
-                    <p class="feels">Feels like : ${Math.round(data.main.feels_like)}&deg;C</p>
-                    <p>${data.sys.sunrise}</p>
-                    <p>${data.sys.sunset}</p>
-                </div>
-                <div>
-                    <img src="${imgIcon.src}" class="icon">
-                    <p>${data.weather[0].main}</p>
-                </div>
-                <div>
-                    <p>${data.main.humidity}</p>
-                    <p>${data.wind.speed}</p>
-                    <p>${data.main.pressure}</p>
-                    <p>${data.visibility}</p>
-                </div>
-            </div>
-        </div>
-        `
-        card.append(result);
-        reset();
-    }
-
-    // reset de l'input text
-    function reset() {
-        let input = document.getElementById('input-box');
-        input.value = "";
-    }
-
-    // changement d'icone selon les conditions météos
-    function icons (data, imgIcon){
-        if (data.weather[0].main === 'Rain') {
-          imgIcon.src = 'assets/img/icon/rain.png';
-        } else if (data.weather[0].main === 'Clouds' || data.weather[0].main === 'Mist') {
-          imgIcon.src = 'assets/img/icon/cloud.png';
-        } else if (data.weather[0].main === 'Clear') {
-          imgIcon.src = 'assets/img/icon/cloud-sun.png';
-        } else if (data.weather[0].main === 'Snow') {
-          imgIcon.src = 'assets/img/icon/snowflake.png';
-        } else if (data.weather[0].main === 'Sunny') {
-          imgIcon.src = 'assets/img/icon/sun.png';
-        } else if (data.weather[0].main === 'Thunderstorm' || data.weather[0].main === 'Drizzle') {
-          imgIcon.src = 'assets/img/icon/thunderstorm.png';
-        } else {
-          imgIcon.src = 'assets/img/icon/cloud-sun.png';
+    // valider et stocker les villes ajouter
+    const writeCity = document.querySelector('.search-input');
+    writeCity.addEventListener('keypress', (e) => {
+        if (e.keyCode === 13) {
+            getWeather(writeCity.value);
         }
-      }
-});
+    });
+    const validateSearch = document.querySelector('.search-btn')
+    validateSearch.addEventListener('click', () => {
+        getWeather(writeCity.value);
+    });
+    
+    dataList();

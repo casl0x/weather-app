@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
-    <script type="module" src="./assets/script/script.js" defer></script>
     <link rel="stylesheet" href="./assets/styles/main.css">
 </head>
 <body>
     <section class="container">
         <div class="search">
-            <input list="city" class="search-input" placeholder="search for the weather in your city ..." id="input-box">
+            <input list="city" class="search-input" placeholder="search for the weather in your city ..." id="input-box" required>
             <datalist id="city">
             </datalist>
             <input class="search-btn" value="Search" type="submit">
         </div>
-        <div class="result"></div>
+        <div class="weather"></div>
     </section>
+    <script type="module" src="./assets/script/script.js"></script>
 </body>
 </html>
