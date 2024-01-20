@@ -9,13 +9,14 @@
 <body>
     <section class="container">
         <div class="search">
-            <input list="city" class="search-input" placeholder="search for the weather in your city ..." id="input-box" required>
-            <datalist id="city">
-            </datalist>
-            <input class="search-btn" value="Search" type="submit">
+            <form id="research">
+                <input list="city" class="search-input" placeholder="search for the weather in your city ..." id="input-box" required>
+                <button class="search-btn" type="submit">Search</button>
+            </form>
+            <datalist id="city"></datalist>
         </div>
         <div class="weather"></div>
     </section>
-    <script type="module" src="./assets/script/script.js"></script>
+    <script type="module" src="./assets/script/main.js"></script>
 </body>
 </html>

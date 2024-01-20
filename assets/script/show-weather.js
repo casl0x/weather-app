@@ -1,5 +1,5 @@
 // création de la carte d'info météo
-    function showWeather (data, dataP){
+    function showWeather (data, dataP,){
         const result = document.querySelector('.weather');
 
         const showPicture = dataP.results[0].urls.regular;
@@ -7,11 +7,11 @@
         `
             <div class="weather-info">
                 <p class="weather-info-city">${data.city.name}</p>
-                <span class="weather-info-picture"> </span>
+                <img class="weather-info-picture">
             </div>
         `
         const infoWeather = document.querySelector('.weather-info-picture');
-        infoWeather.style.backgroundImage = `url(${showPicture})`;
+        infoWeather.src= `url(${showPicture})`;
 
         const weekContainer = document.createElement('div');
         weekContainer.classList.add("weather-week")
