@@ -11,16 +11,20 @@ Check the current weather on any city on the planet with this [app](https://casl
 
 <details>
     <summary>⌨️ Language</summary>
-        <option>HTML</option>
-        <option>CSS - Sass</option>
-        <option>Javascript </option>
+        <ul>
+            <li>HTML</li>
+            <li>CSS - Sass</li>
+            <li>Javascript </li>
+        </ul>
 </details>
 
 <details>
     <summary>🔍 API</summary>
-        <option>https://openweathermap.org/</option>
-        <option>https://nominatim.org/release-docs/latest/api/Overview/</option>
-        <option>https://unsplash.com/documentation</option>
+        <ul>
+            <li>https://openweathermap.org/</li>
+            <li>https://nominatim.org/release-docs/latest/api/Overview/</li>
+            <li>https://unsplash.com/documentation</li>
+        </ul>
 </details>
 
 ## To upgrade
